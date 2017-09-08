@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuarios as Usuario;
+use App\Http\Requests\UsuariosRequest;
 
 class UsuariosController extends Controller
 {
@@ -36,10 +37,10 @@ class UsuariosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsuariosRequest $request)
     {
         Usuario::create($request->all());
-        return redirect('usuarios');
+        return redirect('usuarios')->with('status', 'El registro ha sido creado.');
     }
 
     /**
@@ -72,7 +73,7 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UsuariosRequest $request, $id)
     {
         $usuario = Usuario::find($id);
         $usuario->update(['nombres' => $request->nombres,
@@ -81,7 +82,7 @@ class UsuariosController extends Controller
                           'email' => $request->email,
                           'telefono' => $request->telefono
                         ]);
-        return redirect('usuarios');
+        return redirect('usuarios')->with('status', 'El registro ha sido actualizado.');
     }
 
     /**
@@ -95,5 +96,24 @@ class UsuariosController extends Controller
         $usuario = Usuario::find($id);
         $usuario->delete();
         return redirect('usuarios');
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  string  $campo
+     * @param  string  $dato
+     * @return \Illuminate\Http\Response
+     */
+    public function existe($campo, $dato)
+    {
+        $resp = 0;
+
+        if( $campo == "cedula" || $campo == "email" ){
+            $usuario = Usuario::where($campo,$dato)->get();
+            $resp = ( $usuario->isNotEmpty() && ( $usuario[0][$campo] == $dato ) ) ? 1 : 0 ;
+        }
+
+        echo $resp;
+
     }
 }

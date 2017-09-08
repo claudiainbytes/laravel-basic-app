@@ -5,9 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Prueba Laravel - Usuarios </title>
-        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/js/jquery-ui/themes/base/jquery-ui.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/js/jquery-form-validator/theme-default.min.css') }}" />
     </head>
     <body>
         <!-- Top Bar -->
@@ -25,7 +26,9 @@
             </div> <!-- Container Row -->
         </div> <!-- Container fluid -->
         <script src="{{ asset('assets/js/jquery-1.12.4.min.js?') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/jquery-ui/jquery-ui.min.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery-form-validator/jquery.form-validator.min.js') }}"></script>
+        <script src="{{ asset('assets/js/app.js') }}"></script>
     </body>
 </html>

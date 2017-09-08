@@ -15,9 +15,26 @@
   <li class="active"> @php echo $alm->id != null ? $alm->nombres.' '.$alm->apellidos : 'Nuevo Registro'; @endphp</li>
 </ol>
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 @php $guardar = ( $alm->id != null ? 'usuarios/'.$alm->id.'/guardar' :  'usuarios/guardar' ); @endphp
 
-<form id="frm-User" action="/{{ $guardar }}" method="post" enctype="multipart/form-data">
+<form id="registration-form" action="/{{ $guardar }}" method="post" enctype="multipart/form-data">
+
+    @if ($alm->id != null)
+       {{ method_field('PUT') }}
+    @else
+       {{ method_field('POST') }}
+    @endif
 
     {{ csrf_field() }}
 
@@ -25,27 +42,31 @@
 
     <div class="form-group">
         <label>Nombres</label>
-        <input type="text" name="nombres" value="{{ $alm->nombres }}" class="form-control" placeholder="Nombres"/>
+        <input type="text" name="nombres" value="{{ old('nombres', $alm->nombres)  }}" class="form-control" placeholder="Nombres" data-validation="length alphanumeric" data-validation-length="3-60" data-validation-allowing=" -_'ñÑ" data-validation-error-msg="Los nombres deben tener un valor alfanumérico (3-60) carácteres"/>
     </div>
 
     <div class="form-group">
         <label>Apellidos</label>
-        <input type="text" name="apellidos" value="{{ $alm->apellidos }}" class="form-control" placeholder="Apellidos"/>
+        <input type="text" name="apellidos" value="{{ old('apellidos', $alm->apellidos) }}" class="form-control" placeholder="Apellidos" data-validation="length alphanumeric" data-validation-length="3-60" data-validation-allowing=" -_'ñÑ" data-validation-error-msg="Los apellidos deben tener un valor alfanumérico (3-60) carácteres"/>
     </div>
 
     <div class="form-group">
         <label>Cédula</label>
-        <input type="text" name="cedula" value="{{ $alm->cedula }}" class="form-control" placeholder="Cédula"/>
+        <input type="text" id="cedula" name="cedula" value="{{ old('cedula', $alm->cedula) }}" class="form-control" placeholder="Cédula" data-validation="cedula"/>
+        <input type="hidden" name="oldcedula" value="{{ old('cedula', $alm->cedula) }}" id="oldcedula"/>
+        <input type="hidden" name="validacedula" value="1" id="validacedula"/>
     </div>
 
     <div class="form-group">
         <label>E-mail</label>
-        <input type="text" name="email" value="{{ $alm->email }}" class="form-control" placeholder="E-mail"/>
+        <input type="text" id="email" name="email" value="{{ old('email', $alm->email) }}" class="form-control" placeholder="E-mail" data-validation="customemail"/>
+        <input type="hidden" name="oldemail" value="{{ old('email', $alm->email) }}" id="oldemail"/>
+        <input type="hidden" name="validaemail" value="1" id="validaemail"/>
     </div>
 
     <div class="form-group">
         <label>Teléfono</label>
-        <input type="text" name="telefono" value="{{ $alm->telefono }}" class="form-control" placeholder="Teléfono"/>
+        <input type="text" name="telefono" value="{{ old('telefono', $alm->telefono) }}" class="form-control" placeholder="Teléfono" data-validation="telefono"/>
     </div>
 
     <hr />

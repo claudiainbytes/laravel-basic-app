@@ -15,12 +15,12 @@ Route::get('/', function () {
     return view('layouts/app');
 });
 
-Route::group(['prefix' => 'usuarios'], function() {
+Route::group(['middleware' => 'web','prefix' => 'usuarios'], function() {
     Route::get('/', 'UsuariosController@index');
     Route::get('/nuevo', 'UsuariosController@create');
     Route::get('/{id}/editar', 'UsuariosController@edit');
     Route::get('/{id}/borrar', 'UsuariosController@destroy');
     Route::post('/guardar', 'UsuariosController@store');
-    Route::post('/{id}/guardar', 'UsuariosController@update');
+    Route::put('/{id}/guardar', 'UsuariosController@update');
+    Route::get('/{campo}/{dato}/existe', 'UsuariosController@existe');
 });
-
